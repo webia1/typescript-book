@@ -23,7 +23,7 @@ logName(animal); // okay
 logName(random); // Error: property `name` is missing
 ```
 
-However *structural* typing has a weakness in that it allows you to misleadingly think that something accepts more data than it actually does. This is demonstrated in the following code which TypeScript will error on as shown:
+However, *structural* typing has a weakness in that it allows you to misleadingly think that something accepts more data than it actually does. This is demonstrated in the following code which TypeScript will error on as shown:
 
 ```ts
 function logName(something: { name: string }) {
@@ -59,7 +59,7 @@ The reason why only object literals are type checked this way is because in this
 A type can include an index signature to explicitly indicate that excess properties are permitted:
 
 ```ts
-var x: { foo: number, [x: string]: any };
+var x: { foo: number, [x: string]: unknown };
 x = { foo: 1, baz: 2 };  // Ok, `baz` matched by index signature
 ```
 
@@ -70,15 +70,15 @@ x = { foo: 1, baz: 2 };  // Ok, `baz` matched by index signature
 ```ts
 // Assuming
 interface State {
-  foo: string;
-  bar: string;
+    foo: string;
+    bar: string;
 }
 
 // You want to do: 
 this.setState({foo: "Hello"}); // Error: missing property bar
 
 // But because state contains both `foo` and `bar` TypeScript would force you to do: 
-this.setState({foo: "Hello", bar: this.state.bar}};
+this.setState({foo: "Hello", bar: this.state.bar});
 ```
 
 Using the idea of freshness you would mark all the members as optional and *you still get to catch typos*!: 
@@ -86,16 +86,16 @@ Using the idea of freshness you would mark all the members as optional and *you 
 ```ts
 // Assuming
 interface State {
-  foo?: string;
-  bar?: string;
+    foo?: string;
+    bar?: string;
 }
 
 // You want to do: 
 this.setState({foo: "Hello"}); // Yay works fine!
 
 // Because of freshness it's protected against typos as well!
-this.setState({foos: "Hello"}}; // Error: Objects may only specify known properties
+this.setState({foos: "Hello"}); // Error: Objects may only specify known properties
 
 // And still type checked
-this.setState({foo: 123}}; // Error: Cannot assign number to a string
+this.setState({foo: 123}); // Error: Cannot assign number to a string
 ```

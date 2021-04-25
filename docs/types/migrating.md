@@ -98,7 +98,7 @@ import * as $ from "jquery";
 
 # External non js resources
 
-You can even allow import of any file e.g. `.css` files (if you are using something like webpack style loaders or css modules) with a simple `*` style declaration (ideally in a [`globals.d.ts` file](../project/globals.md)): 
+You can even allow import of any file e.g. `.css` files (if you are using something like webpack style loaders or css modules) with a simple `*` style declaration (ideally in a [`global.d.ts` file](../project/globals.md)): 
 
 ```ts
 declare module "*.css";
@@ -111,3 +111,6 @@ Similarly if you are using html templates (e.g. angular) you can:
 ```ts
 declare module "*.html";
 ```
+
+# More 
+If you want to be more silent about your upgrade because you couldn't get team buy in to move to TypeScript, [TypeScript has a blog post on upgrading silently without having to convince your team up front](https://devblogs.microsoft.com/typescript/how-to-upgrade-to-typescript-without-anybody-noticing-part-1/).

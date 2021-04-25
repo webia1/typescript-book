@@ -1,5 +1,5 @@
 # Compiler
-The typescript compiler source is located under the [`src/compiler`](https://github.com/Microsoft/TypeScript/tree/master/src/compiler) folder.
+The TypeScript compiler source is located under the [`src/compiler`](https://github.com/Microsoft/TypeScript/tree/master/src/compiler) folder.
 
 It is split into the follow key parts:
 * Scanner (`scanner.ts`)
@@ -8,10 +8,7 @@ It is split into the follow key parts:
 * Checker (`checker.ts`)
 * Emitter (`emitter.ts`)
 
-Each of these get their own unique files in the source. These parts will be explained later on in this chapter.
-
-## BYOTS
-We have a project called [Bring Your Own TypeScript (BYOTS)](https://github.com/basarat/byots) which makes it easier to play around with the compiler API e.g. by exposing internal APIs. You can use it to expose your local app's version of TypeScript globally.
+Each of these get their own unique files in the source. These parts will be explained later on in this chapter. 
 
 ## Syntax vs. Semantics
 Just because something is *syntactically* correct doesn't mean it is *semantically* correct. Consider the following piece of TypeScript code which although *syntactically* valid is *semantically* wrong

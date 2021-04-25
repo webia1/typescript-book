@@ -8,9 +8,10 @@
 ### Arrow Functions
 
 Lovingly called the *fat arrow* (because `->` is a thin arrow and `=>` is a fat arrow) and also called a *lambda function* (because of other languages). Another commonly used feature is the fat arrow function `()=>something`. The motivation for a *fat arrow* is:
+
 1. You don't need to keep typing `function`
-2. It lexically captures the meaning of `this`
-2. It lexically captures the meaning of `arguments`
+1. It lexically captures the meaning of `this`
+1. It lexically captures the meaning of `arguments`
 
 For a language that claims to be functional, in JavaScript you tend to be typing `function` quite a lot. The fat arrow makes it simple for you to create a function
 ```ts
@@ -121,7 +122,7 @@ const child = new Child(123);
 console.log(child.callAdd(123)); // 246
 ```
 
-However they do not work with the `super` keyword when you try to override the function in a child class. Properties go on `this`. Since there is only one `this` such functions cannot participate in a call to `super` (`super` only works on prototype members). You can easily get around it by creating a copy of the method before overriding it in the child.
+However, they do not work with the `super` keyword when you try to override the function in a child class. Properties go on `this`. Since there is only one `this` such functions cannot participate in a call to `super` (`super` only works on prototype members). You can easily get around it by creating a copy of the method before overriding it in the child.
 
 ```ts
 class Adder {
@@ -154,7 +155,7 @@ var foo = () => {
 ```
 is parsed as a *block* containing a *JavaScript Label* by JavaScript runtimes (cause of the JavaScript specification).
 
->  If that doesn't make sense, don't worry, as you get a nice compiler error from TypeScript saying "unused label" anyways. Labels are an old (and mostly unused) JavaScript feature that you can ignore as a modern *GOTO considered bad* experienced developer 🌹
+>  If that doesn't make sense, don't worry, as you get a nice compiler error from TypeScript saying "unused label" anyways. Labels are an old (and mostly unused) JavaScript feature that you can ignore as a modern GOTO (considered bad by experienced developers 🌹)
 
 You can fix it by surrounding the object literal with `()`:
 

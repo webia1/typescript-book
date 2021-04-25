@@ -1,7 +1,5 @@
 ## Generators
 
-> NOTE: You cannot use generators in TypeScript in a meaningful way (the ES5 emitter is in progress). However that will change soon so we still have this chapter.
-
 `function *` is the syntax used to create a *generator function*. Calling a generator function returns a *generator object*. The generator object just follows the [iterator][iterator] interface (i.e. the `next`, `return` and `throw` functions). 
 
 There are two key motivations behind generator functions: 
@@ -81,7 +79,7 @@ Execution resumed
 
 > So essentially the execution of the generator function is controllable by the generator object.
 
-Our communication using the generator has been mostly one way with the generator returning values for the iterator. One extremely powerful feature of generators in JavaScript is that they allow two way communications!
+Our communication using the generator has been mostly one way with the generator returning values for the iterator. One extremely powerful feature of generators in JavaScript is that they allow two way communications (with caveats).
 
 * you can control the resulting value of the `yield` expression using `iterator.next(valueToInject)`
 * you can throw an exception at the point of the `yield` expression using `iterator.throw(error)`
@@ -90,7 +88,7 @@ The following example demonstrates `iterator.next(valueToInject)`:
 
 ```ts
 function* generator() {
-    var bar = yield 'foo';
+    const bar = yield 'foo'; // bar may be *any* type
     console.log(bar); // bar!
 }
 
@@ -101,6 +99,10 @@ console.log(foo.value); // foo
 // Resume execution injecting bar
 const nextThing = iterator.next('bar');
 ```
+
+Since `yield` returns the parameter passed to the iterator's `next` function, and all iterators' `next` functions accept a parameter of any type, TypeScript will always assign the `any` type to the result of the `yield` operator (`bar` above).
+
+> You are on your own to coerce the result to the type you expect, and ensure that only values of that type are passed to next (such as by scaffolding an additional type-enforcement layer that calls `next` for you.) If strong typing is important to you, you may want to avoid two-way communication altogether, as well as packages that rely heavily on it (e.g., redux-saga).
 
 The following example demonstrates `iterator.throw(error)`:
 

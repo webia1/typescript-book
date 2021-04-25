@@ -4,12 +4,14 @@ There were (and will continue to be) a lot of competitors in *Some syntax* to *J
 
 ![JavaScript is TypeScript](https://raw.githubusercontent.com/basarat/typescript-book/master/images/venn.png)
 
-However it does mean that *you need to learn JavaScript* (the good news is *you **only** need to learn JavaScript*). TypeScript is just standardizing all the ways you provide *good documentation* on JavaScript.
+However, it does mean that *you need to learn JavaScript* (the good news is *you **only** need to learn JavaScript*). TypeScript is just standardizing all the ways you provide *good documentation* on JavaScript.
 
-* Just giving you a new syntax doesn't help fix bugs (looking at you CoffeeScript).
-* Creating a new language abstracts you too far from your runtimes, communities (looking at you Dart).
+* Just giving you a new syntax doesn't help catch bugs - but might help you write cleaner / less bugs (e.g. CoffeeScript).
+* Creating a new language abstracts you too far from your runtimes and communities - but might help on-board you easier if its an already familiar flavour (e.g. Dart - closer for Java / C# devs).
 
 TypeScript is just JavaScript with docs.
+
+> JSNext is open to interpretation - not everything proposed for the next version of JS actually makes it to browsers. TypeScript only adds support for proposals once they reach [stage 3](https://tc39.es/process-document/).
 
 ## Making JavaScript Better
 

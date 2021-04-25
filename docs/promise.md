@@ -33,7 +33,7 @@ catch (err) {
 }
 ```
 
-There are three behaviors of this simple `loadJSONSync` function, a valid return value, a file system error or a JSON.parse error. We handle the errors with a simple try/catch as you are used to when doing synchronous programming in other languages. Now let's make a good async version of such a function. A decent initial attempt with a trivial error checking logic would be as follows:
+There are three behaviors of this simple `loadJSONSync` function, a valid return value, a file system error or a JSON.parse error. We handle the errors with a simple try/catch as you are used to when doing synchronous programming in other languages. Now let's make a good async version of such a function. A decent initial attempt with trivial error checking logic would be as follows:
 
 ```ts
 import fs = require('fs');
@@ -52,7 +52,7 @@ Simple enough, it takes a callback, passes any file system errors to the callbac
 1. Never call the callback twice.
 1. Never throw an error.
 
-This simple function however fails to accommodate for point two. In fact `JSON.parse` throws an error if it is passed bad JSON and the callback never gets called and the application crashes. This is demonstrated in the below example:
+However, this simple function fails to accommodate for point two. In fact, `JSON.parse` throws an error if it is passed bad JSON and the callback never gets called and the application crashes. This is demonstrated in the below example:
 
 ```ts
 import fs = require('fs');
@@ -102,7 +102,7 @@ loadJSON('invalid.json', function (err, data) {
 });
 ```
 
-However there is a subtle bug in this code. If the callback (`cb`), and not `JSON.parse`, throws an error, since we wrapped it in a `try`/`catch`, the `catch` executes and we call the callback again i.e. the callback gets called twice! This is demonstrated in the example below:
+However, there is a subtle bug in this code. If the callback (`cb`), and not `JSON.parse`, throws an error, since we wrapped it in a `try`/`catch`, the `catch` executes and we call the callback again i.e. the callback gets called twice! This is demonstrated in the example below:
 
 ```ts
 import fs = require('fs');
@@ -315,7 +315,7 @@ Promise.resolve(123)
     })
 ```
 
-* A `catch` is only called in case of an error in the preceeding chain: 
+* A `catch` is only called in case of an error in the preceding chain:
 
 ```ts
 Promise.resolve(123)
@@ -391,6 +391,28 @@ function readFileAsync(filename: string): Promise<any> {
 }
 ```
 
+The most reliable way to do this is to hand write it and it doesn't have to be as verbose as the previous example e.g. converting `setTimeout` into a promisified `delay` function is super easy:
+
+```ts
+const delay = (ms: number) => new Promise(res => setTimeout(res, ms));
+```
+
+Note that there is a handy dandy function in NodeJS that does this `node style function => promise returning function` magic for you:
+
+```ts
+/** Sample usage */
+import fs from 'fs';
+import util from 'util';
+const readFile = util.promisify(fs.readFile);
+```
+
+> Webpack supports the `util` module out of the box and you can use it in the browser as well.
+
+If you have a node callback style function as a *member* be sure to `bind` it as well to make sure it has the correct `this`: 
+
+```ts
+const dbGet = util.promisify(db.get).bind(db);
+```
 
 ### Revisiting the JSON example
 
@@ -438,7 +460,7 @@ The reason why this function was simpler is because the "`loadFile`(async) + `JS
 ### Parallel control flow
 We have seen how trivial doing a serial sequence of async tasks is with promises. It is simply a matter of chaining `then` calls.
 
-However you might potentially want to run a series of async tasks and then do something with the results of all of these tasks. `Promise` provides a static `Promise.all` function that you can use to wait for `n` number of promises to complete. You provide it with an array of `n` promises and it gives you an array of `n` resolved values. Below we show Chaining as well as Parallel:
+However, you might potentially want to run a series of async tasks and then do something with the results of all of these tasks. `Promise` provides a static `Promise.all` function that you can use to wait for `n` number of promises to complete. You provide it with an array of `n` promises and it gives you an array of `n` resolved values. Below we show Chaining as well as Parallel:
 
 ```ts
 // an async function to simulate loading an item from some server
@@ -451,7 +473,7 @@ function loadItem(id: number): Promise<{ id: number }> {
     });
 }
 
-// Chaining
+// Chained / Sequential
 let item1, item2;
 loadItem(1)
     .then((res) => {
@@ -463,7 +485,7 @@ loadItem(1)
         console.log('done');
     }); // overall time will be around 2s
 
-// Parallel
+// Concurrent / Parallel
 Promise.all([loadItem(1), loadItem(2)])
     .then((res) => {
         [item1, item2] = res;
@@ -485,23 +507,6 @@ Promise.race([task1, task2]).then(function(value) {
   console.log(value); // "one"
   // Both resolve, but task1 resolves faster
 });
-```
-
-### Converting callback functions to promise
-
-The most reliable way to do this is to hand write it. e.g. converting `setTimeout` into a promisified `delay` function is super easy:
-
-```ts
-const delay = (ms: number) => new Promise(res => setTimeout(res, ms));
-```
-
-Note that there is a handy dandy function in NodeJS that does this `node style function => promise returning function` magic for you:
-
-```ts
-/** Sample usage */
-import fs = require('fs');
-import util = require('util');
-const readFile = util.promisify(fs.readFile);
 ```
 
 [polyfill]:https://github.com/stefanpenner/es6-promise

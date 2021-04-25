@@ -69,6 +69,7 @@ import { someVar as aDifferentName } from './foo';
 ```
 
 * Import everything from a module into a name with `import * as` e.g.
+
 ```js
 // file `bar.ts`
 import * as foo from './foo';
@@ -100,7 +101,7 @@ export { someVar as aDifferentName } from './foo';
 ```
 
 ### Default exports/imports
-As you will learn later, I am not a fan of default exports. Neverthless here is syntax for export and using default exports
+As you will learn later, I am not a fan of default exports. Nevertheless here is syntax for export and using default exports
 
 * Export using `export default`
   * before a variable (no `let / const / var` needed)
@@ -124,9 +125,9 @@ import someLocalNameForThisFile from "../foo";
 
 ### Module paths
 
-> I am just going to assume `moduleResolution: commonjs`. This is the option you should have in your TypeScript config. This setting is implied automatically by `module:commonjs`.
+> I am just going to assume `moduleResolution: "Node"`. This is the option you should have in your TypeScript config. This setting is implied automatically by `module:commonjs`.
 
-There are two distinct kinds of modules. The distinction is driven by the path section of the import statment (e.g. `import foo from 'THIS IS THE PATH SECTION'`).
+There are two distinct kinds of modules. The distinction is driven by the path section of the import statement (e.g. `import foo from 'THIS IS THE PATH SECTION'`).
 
 * Relative path modules (where path starts with `.` e.g. `./someFile` or `../../someFolder/someFile` etc.)
 * Other dynamic lookup modules (e.g. `'core-js'` or `'typestyle'` or `'react'` or even `'react/core'` etc.)
@@ -166,8 +167,8 @@ When I say *places that are checked* I mean that the following things are checke
 
 * If the place is a file, e.g. `foo.ts`, hurray!
 * else if the place is a folder and there is a file `foo/index.ts`, hurray!
-* else if the place is a folder and there a `foo/package.json` and there is a file specified in the `types` key in the package.json that exists, then hurray!
-* else if the place is a folder and there a `package.json` and there is a file specified in the `main` key in the package.json that exists, then hurray!
+* else if the place is a folder and there is a `foo/package.json` and a file specified in the `types` key in the package.json that exists, then hurray!
+* else if the place is a folder and there is a `package.json` and a file specified in the `main` key in the package.json that exists, then hurray!
 
 By file I actually mean `.ts` / `.d.ts` and `.js`.
 
@@ -178,7 +179,7 @@ You can declare a module *globally* for your project by using `declare module 's
 
 e.g.
 ```ts
-// globals.d.ts
+// global.d.ts
 declare module 'foo' {
   // Some variable declarations
   export var bar: number; /*sample*/
@@ -252,7 +253,7 @@ Type inference needs to be done *upfront*. This means that if you want to use so
 import foo = require('foo');
 var bar: foo.SomeType;
 ```
-However you might want to only load the file `foo` at runtime under certain conditions. For such cases you should use the `import`ed name only in *type annotations* and **not** as a *variable*. This removes any *upfront* runtime dependency code being injected by TypeScript. Then *manually import* the actual module using code that is specific to your module loader.
+However, you might want to only load the file `foo` at runtime under certain conditions. For such cases you should use the `import`ed name only in *type annotations* and **not** as a *variable*. This removes any *upfront* runtime dependency code being injected by TypeScript. Then *manually import* the actual module using code that is specific to your module loader.
 
 As an example, consider the following `commonjs` based code where we only load a module `'foo'` on a certain function call:
 
@@ -288,7 +289,7 @@ Similar to the lazy loading use case certain module loaders (commonjs/node and a
 
 ### Use case: Ensure Import
 
-Sometimes you want to load a file just for the side effect (e.g. the module might register itself with some library like [CodeMirror addons](https://codemirror.net/doc/manual.html#addons) etc.). However if you just do a `import/require` the transpiled JavaScript will not contain a dependency on the module and your module loader (e.g. webpack) might completely ignore the import. In such cases you can use a `ensureImport` variable to ensure that the compiled JavaScript takes a dependency on the module e.g.:
+Sometimes you want to load a file just for the side effect (e.g. the module might register itself with some library like [CodeMirror addons](https://codemirror.net/doc/manual.html#addons) etc.). However, if you just do a `import/require` the transpiled JavaScript will not contain a dependency on the module and your module loader (e.g. webpack) might completely ignore the import. In such cases you can use a `ensureImport` variable to ensure that the compiled JavaScript takes a dependency on the module e.g.:
 
 ```ts
 import foo = require('./foo');
@@ -296,6 +297,6 @@ import bar = require('./bar');
 import bas = require('./bas');
 const ensureImport: any =
     foo
-    || bar
-    || bas;
+    && bar
+    && bas;
 ```

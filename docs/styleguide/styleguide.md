@@ -1,8 +1,8 @@
-# TypeScript StyleGuide and Coding Conventions
+# TypeScript Style Guide and Coding Conventions
 
-> An unofficial TypeScript StyleGuide
+> An unofficial TypeScript Style Guide
 
-People have asked me for my opinions on this. Personally I don't enforce these a lot on my teams and projects but it does help to have these mentioned as a tie breaker when someone feels the need to have such strong consistency. There are other things that I feel much more strongly about and those are covered in the [tips chapter](../tips/main.md) (e.g. type assertion is bad, property setters are bad) 🌹.
+People have asked me for my opinions on this. Personally I don't enforce these a lot on my teams and projects but it does help to have these mentioned as a tiebreaker when someone feels the need to have such strong consistency. There are other things that I feel much more strongly about and those are covered in the [tips chapter](../tips/main.md) (e.g. type assertion is bad, property setters are bad) 🌹.
 
 Key Sections:
 
@@ -163,25 +163,25 @@ enum Color {
 
 **Bad**
 ```ts
-let foo = {x:123,y:undefined};
+let foo = { x: 123, y: undefined };
 ```
 **Good**
 ```ts
-let foo:{x:number,y?:number} = {x:123};
+let foo: { x: number, y?: number } = { x:123 };
 ```
 
-* Use `undefined` in general (do consider returning an object like `{valid:boolean,value?:Foo}` instead)
+* Use `undefined` in general (do consider returning an object like `{valid:boolean, value?:Foo}` instead)
 
-***Bad***
+**Bad**
 ```ts
 return null;
 ```
-***Good***
+**Good**
 ```ts
 return undefined;
 ```
 
-* Use `null` where its a part of the API or conventional
+* Use `null` where it's a part of the API or conventional
 
 > Reason: It is conventional in Node.js e.g. `error` is `null` for NodeBack style callbacks.
 
@@ -205,21 +205,21 @@ if (error === null)
 if (error)
 ```
 
-* Use `== undefined` / `!= undefined` (not `===` / `!==`) to check for `null` / `undefined` on primitives as it works for both `null`/`undefined` but not other falsy values (like `''`,`0`,`false`) e.g.
+* Use `== null` / `!= null` (not `===` / `!==`) to check for `null` / `undefined` on primitives as it works for both `null`/`undefined` but not other falsy values (like `''`, `0`, `false`) e.g.
 
 **Bad**
 ```ts
-if (error !== null)
+if (error !== null) // does not rule out undefined
 ```
 **Good**
 ```ts
-if (error != undefined)
+if (error != null) // rules out both null and undefined
 ```
 
 ## Formatting
 The TypeScript compiler ships with a very nice formatting language service. Whatever output it gives by default is good enough to reduce the cognitive overload on the team.
 
-Use [`tsfmt`](https://github.com/vvakame/typescript-formatter) to automatically format your code on the command line. Also your IDE (atom/vscode/vs/sublime) already has formatting support built-in.
+Use [`tsfmt`](https://github.com/vvakame/typescript-formatter) to automatically format your code on the command line. Also, your IDE (atom/vscode/vs/sublime) already has formatting support built-in.
 
 Examples:
 ```ts
@@ -231,7 +231,7 @@ const foo: string = "hello";
 
 * Prefer single quotes (`'`) unless escaping.
 
-> Reason: More JavaScript teams do this (e.g. [airbnb](https://github.com/airbnb/javascript), [standard](https://github.com/feross/standard), [npm](https://github.com/npm/npm), [node](https://github.com/nodejs/node), [google/angular](https://github.com/angular/angular/), [facebook/react](https://github.com/facebook/react)). Its easier to type (no shift needed on most keyboards). [Prettier team recommends single quotes as well](https://github.com/prettier/prettier/issues/1105)
+> Reason: More JavaScript teams do this (e.g. [airbnb](https://github.com/airbnb/javascript), [standard](https://github.com/feross/standard), [npm](https://github.com/npm/npm), [node](https://github.com/nodejs/node), [google/angular](https://github.com/angular/angular/), [facebook/react](https://github.com/facebook/react)). It's easier to type (no shift needed on most keyboards). [Prettier team recommends single quotes as well](https://github.com/prettier/prettier/issues/1105)
 
 > Double quotes are not without merit: Allows easier copy paste of objects into JSON. Allows people to use other languages to work without changing their quote character. Allows you to use apostrophes e.g. `He's not going.`. But I'd rather not deviate from where the JS Community is fairly decided.
 
@@ -249,16 +249,16 @@ const foo: string = "hello";
 
 * Use semicolons.
 
-> Reasons: Explicit semicolons helps language formatting tools give consistent results. Missing ASI (automatic semicolon insertion) can trip new devs e.g. `foo() \n (function(){})` will be a single statement (not two). Recommended by TC39 as well.
+> Reasons: Explicit semicolons helps language formatting tools give consistent results. Missing ASI (automatic semicolon insertion) can trip new devs e.g. `foo() \n (function(){})` will be a single statement (not two). TC39 [warning on this as well](https://github.com/tc39/ecma262/pull/1062). Example teams: [airbnb](https://github.com/airbnb/javascript), [idiomatic](https://github.com/rwaldron/idiomatic.js), [google/angular](https://github.com/angular/angular/), [facebook/react](https://github.com/facebook/react), [Microsoft/TypeScript](https://github.com/Microsoft/TypeScript/).
 
 ## Array
 
-* Annotate arrays as `foos:Foo[]` instead of `foos:Array<Foo>`.
+* Annotate arrays as `foos: Foo[]` instead of `foos: Array<Foo>`.
 
-> Reasons: Its easier to read. Its used by the TypeScript team. Makes easier to know something is an array as the mind is trained to detect `[]`.
+> Reasons: It's easier to read. It's used by the TypeScript team. Makes easier to know something is an array as the mind is trained to detect `[]`.
 
 ## Filename
-Name files with `camelCase`. E.g. `accordian.tsx`, `myControl.tsx`, `utils.ts`, `map.ts` etc.
+Name files with `camelCase`. E.g. `accordion.tsx`, `myControl.tsx`, `utils.ts`, `map.ts` etc.
 
 > Reason: Conventional across many JS teams.
 
@@ -269,7 +269,7 @@ Name files with `camelCase`. E.g. `accordian.tsx`, `myControl.tsx`, `utils.ts`, 
 ```
 type Foo = number | { someProperty: number }
 ```
-* Use `interface` when you want `extends` or `implements` e.g
+* Use `interface` when you want `extends` or `implements` e.g.
 
 ```
 interface Foo {

@@ -4,7 +4,7 @@
 * [Overloading](#overloading)
 
 ## Functions
-The TypeScript type system pays a lot of love to functions, after all they are the core building block of a composable system.
+The TypeScript type system pays a lot of love to functions, after all they are the core building blocks of a composable system.
 
 ### Parameter annotations
 Of course you can annotate function parameters just like you can annotate other variables:
@@ -48,17 +48,17 @@ function foo(sample: Foo) {
 }
 ```
 
-However it is generally a good idea to add these annotation to help with errors e.g.:
+However, it is generally a good idea to add these annotation to help with errors e.g.:
 
 ```ts
 function foo() {
-    return { fou: 'John Doe' }; // You might not find this misspelling `foo` till it's too late
+    return { fou: 'John Doe' }; // You might not find this misspelling of `foo` till it's too late
 }
 
 sendAsJSON(foo());
 ```
 
-If you don't plan to return anything from a function to you can annotate it as `:void`. You can generally drop `:void` and leave it to the inference engine though.
+If you don't plan to return anything from a function, you can annotate it as `:void`. You can generally drop `:void` and leave it to the inference engine though.
 
 ### Optional Parameters
 You can mark a parameter as optional:
@@ -72,7 +72,7 @@ foo(123);
 foo(123, 'hello');
 ```
 
-Alternatively you can even provide a default value (using `= someValue` after the parameter declaration) which will get injected for you if the caller doesn't provide that argument:
+Alternatively you can even provide a default value (using `= someValue` after the parameter declaration) which is injected for you if the caller doesn't provide that argument:
 
 ```ts
 function foo(bar: number, bas: string = 'hello') {
@@ -104,10 +104,7 @@ function padding(a: number, b?: number, c?: number, d?: any) {
 }
 ```
 
-If you look at the code carefully you realize the meaning of `a`,`b`,`c`,`d` change based on how many arguments are passed in. Also the function only expects `1`, `2` or `4` arguments. These constraints can be *enforced* and *documented* using function overloading. You just:
-
-* declare the function header multiple times,
-* the last function header is the one that is actually active *within* the function body but is not available to the outside world.
+If you look at the code carefully you realize the meaning of `a`,`b`,`c`,`d` changes based on how many arguments are passed in. Also the function only expects `1`, `2` or `4` arguments. These constraints can be *enforced* and *documented* using function overloading. You just declare the function header multiple times. The last function header is the one that is actually active *within* the function body but is not available to the outside world.
 
 This is shown below:
 
@@ -134,7 +131,7 @@ function padding(a: number, b?: number, c?: number, d?: number) {
 }
 ```
 
-Here the first three function signatures are what is available as valid calls to `padding`:
+Here the first three function headers are available as valid calls to `padding`:
 
 ```ts
 padding(1); // Okay: all
@@ -148,7 +145,25 @@ Of course it's important for the final declaration (the true declaration as seen
 
 > Function overloading in TypeScript doesn't come with any runtime overhead. It just allows you to document the manner you expect the function to be called in and the compiler holds the rest of your code in check.
 
-[](### Declaring Functions)
-[](With lambda, with interfaces which allow overloading declarations)
+### Declaring Functions
+> Quick Tip: *Type Declarations* are how you describe the types of existing implementations. 
 
-[](### Type Compatability)
+There are two ways to *declare* the type of a function without providing an implementation. E.g. 
+
+```ts
+type LongHand = {
+    (a: number): number;
+};
+
+type ShortHand = (a: number) => number;
+```
+The example above are both *exactly* equivalent. The differences exist when you want to add overloads. You can only add overloads in the long hand declaration version e.g. 
+
+```ts
+type LongHandAllowsOverloadDeclarations = {
+    (a: number): number;
+    (a: string): string;
+};
+```
+
+[](### Type Compatibility)

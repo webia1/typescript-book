@@ -9,8 +9,8 @@ console.log(5 == "5"); // true   , TS Error
 console.log(5 === "5"); // false , TS Error
 ```
 
-However the choices JavaScript makes are not always ideal. For example in the below example the first statement is false
-because `""` and `"0"` are both strings and are clearly not equal. However in the second case both `0` and the
+However, the choices JavaScript makes are not always ideal. For example, in the below example the first statement is false
+because `""` and `"0"` are both strings and are clearly not equal. However, in the second case both `0` and the
 empty string (`""`) are falsy (i.e. behave like `false`) and are therefore equal with respect to `==`. Both statements
 are false when you use `===`.
 
@@ -41,4 +41,26 @@ To do such checks use the [deep-equal](https://www.npmjs.com/package/deep-equal)
 import * as deepEqual from "deep-equal";
 
 console.log(deepEqual({a:123},{a:123})); // True
+```
+
+However, quite commonly you don't need deep checks and all you really need is to check by some `id` e.g. 
+
+```ts
+type IdDisplay = {
+  id: string,
+  display: string
+}
+const list: IdDisplay[] = [
+  {
+    id: 'foo',
+    display: 'Foo Select'
+  },
+  {
+    id: 'bar',
+    display: 'Bar Select'
+  },
+]
+
+const fooIndex = list.map(i => i.id).indexOf('foo');
+console.log(fooIndex); // 0
 ```

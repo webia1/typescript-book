@@ -71,7 +71,7 @@ async function dramaticWelcome(): Promise<void> {
 
     for (let i = 0; i < 5; i++) {
         // await is converting Promise<number> into number
-        const count:number = await delay(500, i);
+        const count: number = await delay(500, i);
         console.log(count);
     }
 
@@ -191,7 +191,7 @@ dramaticWelcome();
 You can see full example [here][asyncawaites5code].
 
 
-**Note**: for both target scenarios, we need to make sure our run-time has an ECMAScript-compliant Promise available globally. That might involve grabbing a polyfill for Promise. We also need to make sure that TypeScript knows Promise exists by setting your lib flag to something like "dom", "es2015" or "dom", "es2015.promise", "es5". 
+**Note**: for both target scenarios, we need to make sure our run-time has an ECMAScript-compliant Promise available globally. That might involve grabbing a polyfill for Promise. We also need to make sure that TypeScript knows Promise exists by setting our lib flag to something like "dom", "es2015" or "dom", "es2015.promise", "es5". 
 **We can see what browsers DO have Promise support (native and polyfilled) [here](https://kangax.github.io/compat-table/es6/#test-Promise).**
 
 [generators]:./generators.md

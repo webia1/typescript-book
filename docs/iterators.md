@@ -11,7 +11,7 @@ interface Iterator<T> {
     throw?(e?: any): IteratorResult<T>;
 }
 ```
-
+([More on that `<T>` notation later][generics])  
 This interface allows to retrieve a value from some collection or sequence
 which belongs to the object.
 
@@ -46,7 +46,8 @@ class Frame implements Iterator<Component> {
       }
     } else {
       return {
-        done: true
+        done: true,
+        value: null
       }
     }
   }
@@ -58,18 +59,18 @@ let iteratorResult1 = frame.next(); //{ done: false, value: Component { name: 't
 let iteratorResult2 = frame.next(); //{ done: false, value: Component { name: 'bottom' } }
 let iteratorResult3 = frame.next(); //{ done: false, value: Component { name: 'left' } }
 let iteratorResult4 = frame.next(); //{ done: false, value: Component { name: 'right' } }
-let iteratorResult5 = frame.next(); //{ done: true }
+let iteratorResult5 = frame.next(); //{ done: true, value: null }
 
 //It is possible to access the value of iterator result via the value property:
 let component = iteratorResult1.value; //Component { name: 'top' }
 ```
 Again. Iterator itself is not a TypeScript feature, this code could work without
 implementing Iterator and IteratorResult interfaces explicitly.
-However it is very helpful to use these common
+However, it is very helpful to use these common
 ES6 [interfaces](./types/interfaces.md) for code consistency.
 
 Ok, Nice, but could be more helpful. ES6 defines the *iterable protocol*
-which includes [Symbol.iterator] `symbol` if Iterable interface implemented:
+which includes the [Symbol.iterator] `symbol` if the Iterable interface is implemented:
 ```ts
 //...
 class Frame implements Iterable<Component> {
@@ -188,8 +189,10 @@ for(let num of fibMax21) {
 ```
 
 #### Building code with iterators for ES5 target
-Code examples above require ES6 target, however it could work
+Code examples above require ES6 target. However, it could work
 with ES5 target as well if target JS engine supports `Symbol.iterator`.
 This can be achieved by using ES6 lib with ES5 target
 (add es6.d.ts to your project) to make it compile.
 Compiled code should work in node 4+, Google Chrome and in some other browsers.
+
+[generics]: ./types/generics.md

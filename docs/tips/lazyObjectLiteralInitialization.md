@@ -1,6 +1,6 @@
 ## Lazy Object Literal Initialization
 
-Quite commonly in JavaScript code bases you would initialize and object literals in the following manner:
+Quite commonly in JavaScript code bases you would initialize object literals in the following manner:
 
 ```ts
 let foo = {};
@@ -31,7 +31,7 @@ let foo = {
 
 This is also great for code review and code maintainability purposes.
 
-> The quick fix and middle ground *lazy* initialization patterns described below suffer from *mistakingly forgetting to initialize a property*. 
+> The quick fix and middle ground *lazy* initialization patterns described below suffer from *mistakenly forgetting to initialize a property*. 
 
 ### Quick Fix
 
@@ -77,5 +77,4 @@ foo.bas = "Hello World";
 
 // later in the codebase:
 foo.bar = 'Hello Stranger'; // Error: You probably misspelled `bas` as `bar`, cannot assign string to number
-}
 ```

@@ -1,18 +1,18 @@
-### Template Strings
-Syntactically these are strings that use backticks ( i.e. \` ) instead of single (') or double (") quotes. The motivation of Template Strings is three fold:
+### Template Literals (Template Strings)
+Syntactically these are strings that use backticks ( i.e. \` ) instead of single (') or double (") quotes. The motivation of Template Literals is three fold:
 
 * String Interpolation
 * Multiline Strings
 * Tagged Templates
 
 #### String Interpolation
-Another common use case is when you want to generate some string out of some static strings + some variables. For this you would need some *templating logic* and this is where *template strings* get their name from. Here's how you would potentially generate an html string previously:
+Another common use case is when you want to generate some string out of some static strings + some variables. For this you would need some *templating logic* and this is where *template strings* originally got their name from. They have since been officially renamed to *template literals*. Here's how you would potentially generate an html string previously:
 
 ```ts
 var lyrics = 'Never gonna give you up';
 var html = '<div>' + lyrics + '</div>';
 ```
-Now with template strings you can just do:
+Now with template literals you can just do:
 
 ```ts
 var lyrics = 'Never gonna give you up';
@@ -25,7 +25,7 @@ Note that any placeholder inside the interpolation (`${` and `}`) is treated as 
 console.log(`1 and 1 make ${1 + 1}`);
 ```
 
-#### Multiline Strings
+#### Multiline Literals
 Ever wanted to put a newline in a JavaScript string? Perhaps you wanted to embed some lyrics? You would have needed to *escape the literal newline* using our favorite escape character `\`, and then put a new line into the string manually `\n` at the next line. This is shown below:
 
 ```ts
@@ -53,7 +53,7 @@ var say = "a bird in hand > two in the bush";
 var html = htmlEscape `<div> I would just like to say : ${say}</div>`;
 
 // a sample tag function
-function htmlEscape(literals, ...placeholders) {
+function htmlEscape(literals: TemplateStringsArray, ...placeholders: string[]) {
     let result = "";
 
     // interleave the literals with the placeholders
@@ -72,6 +72,7 @@ function htmlEscape(literals, ...placeholders) {
     return result;
 }
 ```
+> Note: You can annotate `placeholders` to be any `[]`. Whatever you annotate it as, TypeScript will type check to make sure the placeholders used to call the tag match the annotation. For example if you expect to deal with `string` or `number`s you can annotate `...placeholders:(string | number)[]`
 
 #### Generated JS
 For pre ES6 compile targets the code is fairly simple. Multiline strings become escaped strings. String interpolation becomes *string concatenation*. Tagged Templates become function calls.
